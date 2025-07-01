@@ -19,6 +19,8 @@ sequenceDiagram
     DestinationChain->>DestinationChain: Verify signature & nonce
     DestinationChain->>DestinationChain: Execute target function as user
 
+---
+
 📦 Payload Structure
 
 A typical signed payload includes:
@@ -48,9 +50,9 @@ signature
 
 2. If valid:
 
-Extract function call
+Extracts function call
 
-Execute on behalf of original user (msg.sender overridden)
+Executes on behalf of original user (msg.sender overridden)
 
 
 
@@ -77,3 +79,5 @@ Payloads can be sent to EVM or non-EVM targets, as long as the forwarder is impl
 
 KIP-CK’s data flow is simple, modular, and chain-agnostic.
 It enables secure cross-chain interaction without token bridges or wrapped assets — powered only by signed intent and verifiable relayers.
+
+---
