@@ -2,7 +2,7 @@
 
 This document describes the core data flow of KIP-CK, outlining how a signed message is relayed and executed across different chains — without relying on bridges or wrapped tokens.
 
-
+---
 
 ## 🔁 Standard Cross-chain Flow (EVM to EVM or EVM to non-EVM)
 
@@ -18,7 +18,6 @@ sequenceDiagram
     Relayer->>DestinationChain: Forward payload to Trusted Forwarder
     DestinationChain->>DestinationChain: Verify signature & nonce
     DestinationChain->>DestinationChain: Execute target function as user
-
 
 📦 Payload Structure
 
