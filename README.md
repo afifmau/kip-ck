@@ -84,13 +84,15 @@ Modular & Extendable
 
 📡 Supported Chains
 
-Chain	Status	Notes
 
-Ethereum	✅ Planned	EVM base implementation
-Polygon	✅ Planned	Layer-2 integration
-Aptos	⚙️ Draft	MoveVM compatibility
-Cosmos SDK	⚙️ Draft	Via module adapter
-Others (Sui, ZK, etc.)	🔜 Community-driven	Adapter needed
+| Chain         | Status      | Notes                            |
+|---------------|-------------|----------------------------------|
+| Ethereum      | ✅ Planned  | EVM base implementation          |
+| Polygon       | ✅ Planned  | Layer-2 integration              |
+| Aptos         | ⚙️ Draft    | MoveVM compatibility             |
+| Cosmos SDK    | ⚙️ Draft    | Adapter via Cosmos module        |
+| Sui / ZK / L3 | 🔜 Upcoming | Community-driven integration     |
+
 
 
 
