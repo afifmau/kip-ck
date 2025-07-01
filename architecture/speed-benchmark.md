@@ -6,9 +6,9 @@ This document outlines estimated latency of cross-chain asset or message transfe
 
 ## 📡 General Flow
 
-1. User signs a payload off-chain
-2. Relayer picks it up and forwards to the destination chain
-3. Destination chain verifies and executes the message
+1. User signs a payload off-chain  
+2. Relayer picks it up and forwards to the destination chain  
+3. Destination chain verifies and executes the message  
 
 ---
 
@@ -23,33 +23,28 @@ This document outlines estimated latency of cross-chain asset or message transfe
 | Cosmos → Ethereum           | Medium       | ~20 – 35        |
 
 > ⚠️ These numbers assume:
-> - Relayers are online and responsive
-> - No congestion or network failures
-> - Destination chain block time is <10s
+> - Relayers are online and responsive  
+> - No major congestion on the destination chain  
+> - Fast finality chains or L2s when applicable  
 
 ---
 
-## ⚙️ Variables Affecting Speed
+## 🧪 Optimization Potential (Ongoing R&D)
 
-- ⛓️ Destination chain block time (L1 vs L2)
-- 🚀 Relayer responsiveness
-- 📤 Payload size & complexity
-- 🧠 On-chain computation (signature checks, decoding)
-- 🔁 Retries & error handling if tx fails
+Although current benchmarks are solid, KIP-CK is still under **active development**.  
+We are exploring several ways to reduce cross-chain latency even further:
 
----
+- 🛰️ Real-time relayer pipelines (WebSocket/event-based)
+- 🔁 Batching intent payloads before relaying
+- ⛓️ Faster chain targets (L2s, finality chains)
+- 🧠 Efficient signature verification and lightweight payloads
 
-## 🚀 Future Optimizations
-
-- Real-time relayer networks (e.g., Gelato, Biconomy)
-- Parallel submission pipelines
-- Off-chain simulation before submit
-- Bundled payloads to reduce per-message latency
+> ⚙️ With these improvements, we aim to bring latency closer to **5–10 seconds** in optimal conditions.
 
 ---
 
 ## ✅ Summary
 
-KIP-CK can achieve sub-30s latency for most cross-chain calls —  
-especially on modern L2s and fast finality chains.  
-Relayer performance and on-chain design remain key to achieving low latency interoperability.
+KIP-CK currently achieves sub-30s latency across most cross-chain scenarios.  
+Further optimizations are planned to support high-speed, low-latency interoperability —  
+while maintaining bridge-less, trust-minimized architecture.
