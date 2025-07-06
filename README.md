@@ -1,152 +1,54 @@
-# 🌉 KIP-CK – Cross-chain Interoperability Protocol
+# 🔗 KIP-CK Protocol
 
-**KIP-CK** (Keyless Interoperability Protocol – Crosschain) is a next-gen, trust-minimized protocol that enables **secure cross-chain execution without bridges, wrapped assets, or native gas**.
-
-It works on both **EVM and non-EVM chains** using:
-- ✅ Off-chain signed intent
-- ✅ Meta-transactions
-- ✅ Trusted forwarders
-- ✅ Modular relayers
+**KIP-CK** (Kinetic Interchain Protocol – Cross-chain) is a modular and gas-abstracted protocol for seamless cross-chain interactions **without bridges**. Built for scalability, security, and developer simplicity.
 
 ---
 
-## 🚀 Why KIP-CK?
+##  Live Demo
 
-🔐 **Bridge-less**  
-No locking. No wrapping. No honeypots. Assets and logic stay native.
+Try the front-end simulation:
+👉 [kipck-demo.netlify.app](https://kipck-demo.netlify.app)
 
-⚡ **Gasless UX**  
-Users can interact cross-chain without holding native gas on the destination chain.
-
-🔁 **Chain-agnostic**  
-Works across EVM and non-EVM chains (e.g., Ethereum, Aptos, Cosmos, Sui).
-
-🧱 **Modular**  
-Plug-and-play components. Choose your own relayer, signature format, and VM adapter.
-
-🧑‍💻 **Open standard**  
-KIP-CK is a protocol, not a product. Use it freely, fork it, or extend it.
+> No real blockchain involved yet – just a visual simulation for grants, partners, and early testers.
 
 ---
 
-## 🧠 How It Works
+##  Repository Structure
 
-> **"Sign on Chain A. Execute on Chain B."**
-
-1. User signs an **off-chain message** containing:
-   - origin & destination chain ID
-   - calldata (what to do)
-   - expiration & nonce
-   - signature
-
-2. A **relayer** submits it to Chain B’s **Trusted Forwarder**
-
-3. The forwarder:
-   - Verifies the signature
-   - Executes the logic on behalf of the user (`msg.sender = user`)
-   - Records result
-
-📦 No need to lock funds on source chain.  
-🛡 No third-party bridges or wrapped tokens.  
-🧩 Works even between **EVM ↔ Non-EVM**.
+kip-ck/ │ ├── architecture/           # Protocol design & data flows ├── business-model/         # Monetization, ecosystem, and partnerships ├── integration/            # EVM & Non-EVM integration guides ├── key-features/           # Core capabilities & verification tiers ├── simulation/             # CLI & Web-based simulation demos │   └── Web-demo/           # Front-end simulation (HTML/JS/CSS) ├── security/               # Threat model, audits, and risk disclosures │ ├── README.md               # Project overview (this file) └── LICENSE                 # Open-source license
 
 ---
 
-## 📂 Repository Structure
+##  Key Concepts
 
-```bash
-kip-ck/
-├── README.md                  ← You are here
-├── key-features/              ← Core features (gasless, modular, etc.)
-├── architecture/              ← Technical design & flow
-├── simulation/                ← Meta-tx and cross-chain demo
-├── docs/                      ← FAQ, roadmap, license
-└── LICENSE                    ← MIT open source license
-
+-  **No Bridge Required**: Uses intent-based meta-tx across chains.
+-  **Smart Verifier Logic**: Ensures authenticity before cross-chain execution.
+-  **Modular Security**: Optional signature tiers and fee discounts based on verifier trust.
+-  **Low-Fee Relaying**: $0.01–$0.02 estimated per cross-chain execution.
+-  **Dev-friendly**: Free on testnet/devnet with simple integration steps.
 
 ---
 
-🔍 Key Features
+## Roadmap Highlights
 
-Bridge-less Design
-
-Meta-Transaction + Gasless UX
-
-EIP-2771 Compatibility
-
-Support for Non-EVM Chains
-
-Modular & Extendable
-
-
+- ✅ Concept Design
+- ✅ Simulation (CLI & Web)
+- 🔄 Testnet Integration (Next)
+- 🔜 Public Audit & Grant Applications
 
 ---
 
-📡 Supported Chains
+## Contributing
 
-
-| Chain         | Status      | Notes                            |
-|---------------|-------------|----------------------------------|
-| Ethereum      | ✅ Planned  | EVM base implementation          |
-| Polygon       | ✅ Planned  | Layer-2 integration              |
-| Aptos         | ⚙️ Draft    | MoveVM compatibility             |
-| Cosmos SDK    | ⚙️ Draft    | Adapter via Cosmos module        |
-| Sui / ZK / L3 | 🔜 Upcoming | Community-driven integration     |
+Want to help? Feel free to submit issues, pull requests, or reach out via GitHub Discussions.
 
 
 
+## Disclaimer
 
----
-
-💬 Join the Mission
-
-This protocol is open for:
-
-dApp developers
-
-wallet integrators
-
-explorers and relayers
-
-protocol researchers
-
-chain ecosystem builders
-
-
-You can fork, contribute, or just follow the development.
-
-> 📧 For collaboration, DM via GitHub or email: afifmau[at]gmail[dot]com
+This project is in **early development** and the simulation demo does **not interact with real blockchains**. Use for visual testing only.
 
 
 
+© 2025 KIP-CK Contributors • MIT License
 
----
-
-🪙 Funding & Roadmap
-
-This project is currently applying for Gitcoin Grants 24.
-If funded, we will:
-
-✅ Open public devnet for testing
-
-✅ Deliver real simulations for EVM ↔ non-EVM
-
-✅ Provide adapters and SDKs
-
-✅ Open a relayer registry for fair participation
-
-
-See 📅 Roadmap for more details.
-
-
----
-
-⚖️ License
-
-MIT License — Free to use, build, or adapt.
-See 📄 License
-
-
----
-
-> KIP-CK is not just a protocol. It’s a path toward universal, safer, and frictionless cross-chain UX — without the baggage of bridges.
