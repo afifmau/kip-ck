@@ -1,8 +1,17 @@
+# Bug Bounty Program
+
+> **Note:** This bug bounty program is currently in pre-launch phase. Rewards will be activated once funding is secured via grants or partnerships.
+
+We believe in community-driven security. If you discover a bug, vulnerability, or exploit in the KIP-CK Protocol, please report it responsibly.
+
+
+
+
 # Bug Bounty Program – KIP-CK Protocol
 
 We value the contributions of ethical hackers and developers who help keep the KIP-CK Protocol secure. Our Bug Bounty Program rewards those who identify vulnerabilities or critical issues in our smart contracts, relayer logic, and cross-chain infrastructure.
 
----
+
 
 ## Scope
 
@@ -37,7 +46,7 @@ The following components are **in-scope** for the bounty:
 
 
 
-## 📝 Submission Guidelines
+## Submission Guidelines
 
 1. Provide a **clear explanation** of the issue.
 2. Include **steps to reproduce** or exploit (PoC if possible).
