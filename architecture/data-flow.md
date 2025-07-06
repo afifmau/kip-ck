@@ -6,9 +6,24 @@ This document describes the core data flow of KIP-CK, outlining how a signed mes
 
 ## Standard Cross-chain Flow
 
-+--------+         +---------+          +---------------+          +------------------+ |  User  | ----->  | Relayer | ----->   | Source Chain  | ----->   | Destination Chain| +--------+         +---------+          +---------------+          +------------------+ |                  |                       |                          | |   Sign intent    |                       |                          | |----------------->|                       |                          | |                  |  (optional logging)   |                          | |                  |---------------------->|                          | |                  |                       |  Forward signed intent   | |                  |----------------------------------------------->  | |                  |                       |                          | |                  |                       |   Verify & Execute tx    | |                  |                       |<------------------------ |
+graph TD
+  A[User signs intent off-chain] --> B[Relayer picks up signed intent]
+  B --> C{Destination Chain}
+  C --> D[Verify Signature via KIP-CK Protocol]
+  D --> E[Execute Transaction as Original User]
+  E --> F[Emit Event for Confirmation]
 
----
+  subgraph Source Chain
+    A
+  end
+
+  subgraph Relayer
+    B
+  end
+
+  subgraph Target Chain
+    C --> D --> E --> F
+  end
 
 ## Payload Structure
 
