@@ -1,49 +1,46 @@
-# Security Policy – KIP-CK Protocol
+# Verifier Policy – KIP-CK Protocol
 
-Security is a core priority for the KIP-CK protocol. We are committed to protecting cross-chain operations, ensuring user funds, and promoting secure integrations across EVM and non-EVM chains.
+This document outlines the verification rules applied to smart contracts, relayers, and cross-chain transactions within the KIP-CK Protocol to maintain integrity and security.
 
 ---
 
-## Current Security Measures
+## 1. Smart Contract Verification
 
-- **Signature-Based Execution**  
-  Transactions are initiated off-chain and only executed after valid user signatures are verified on-chain.
+-  **Verified Contracts**  
+  - Must have source code published and matched with bytecode on-chain.  
+  - Reviewed for basic security issues and conform to KIP-CK compatibility standard.  
+  - Pay **lower cross-chain fee** (e.g., $0.01–$0.03).
 
-- **Relayer Validation**  
-  Only verified relayers can submit transactions. Each relayer is whitelisted via governance or manual approval.
-
-- **Custom Smart Contract Calls**  
-  Limited to audited and permissioned contracts. Arbitrary calls are sandboxed or restricted to test environments.
-
-- **Fee-Based Risk Mitigation**  
-  Unverified contracts incur higher fees to discourage risky interactions. Discounts apply for verified and audited integrations.
+-  **Unverified Contracts**  
+  - No verified source or unknown origin.  
+  - Higher risk, **charged a higher fee** (e.g., $0.05–$0.10).  
+  - Warning message shown before transaction.
 
 
-## Reporting Vulnerabilities
+## 2. Relayer Requirements
 
-If you discover a security issue, please report it **responsibly and privately**:
-
-- Email: [security@kip-ck.org](mailto:security@kip-ck.org)
-- Or create a responsible disclosure issue via GitHub [here](https://github.com/afifmau/kip-ck/issues)
-
-We aim to acknowledge reports within **72 hours** and resolve valid issues as quickly as possible.
+- Must run with proof-of-relay and off-chain audit logging.
+- Must use secure key management (e.g., HSM, GCP KMS).
+- Must not modify user data or signatures.
+- Verified relayers get reputation score; malicious relayers are banned.
 
 
 
-## Audit Plans
+## 3. Cross-chain Transaction Rules
 
-While KIP-CK is currently under rapid development, we plan to:
-
-- Seek grants to fund **independent smart contract audits**
-- Offer a **Bug Bounty Program** post-mainnet
-- Publish public test coverage and fuzzing stats
-
--m
-
-## Known Risks (See `/security/risk-disclosure.md`)
-
-We openly disclose all known and theoretical vulnerabilities during testnet/devnet phase.
+- Every cross-chain tx must be signed off-chain and relayed by a trusted node.
+- Signature verification on destination chain is mandatory.
+- Replay protection and nonce management are required for each tx.
 
 
 
-*This file will be continuously updated as the protocol matures.*
+## 4. Public Verifiability
+
+- All verified contract hashes, relayers, and relay records are stored publicly.
+- A web-based dashboard will be provided to inspect logs and verification status.
+
+
+
+## 5. Disclaimer
+
+KIP-CK does not guarantee absolute protection. Verification reduces risk, but users must still practice due diligence. KIP-CK is not liable for losses caused by malicious contracts or actors.
