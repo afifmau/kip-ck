@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KIP-CK Protocol Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>KIP-CK Protocol</h1>
+    <p>Cross-Chain Simulation Demo</p>
+  </header>  <main>
+    <section class="demo-box">
+      <label for="wallet">Enter your wallet address:</label>
+      <input type="text" id="wallet" placeholder="0x..." />
+      <button onclick="startSimulation()">Start Simulation</button><div id="log" class="log"></div>
+</section>
+
+  </main>  <footer>
+    <p>🚧 For simulation only – no real blockchain interaction.</p>
+    <a href="https://github.com/afifmau/kip-ck" target="_blank">View on GitHub</a>
+  </footer>  <script src="script.js"></script></body>
+</html>
