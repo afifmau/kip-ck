@@ -1,0 +1,136 @@
+:root {
+  --bg-color: #f9f9fb;
+  --text-color: #333;
+  --primary-color: #2d2dff;
+  --accent-color: #1e1ed1;
+  --card-bg: #ffffff;
+  --log-bg: #f1f1f1;
+}
+
+body.dark {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --card-bg: #1e1e1e;
+  --log-bg: #1c1c1c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  padding: 20px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+header, footer {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+header p {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.demo-box {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  background: transparent;
+  color: var(--text-color);
+}
+
+button {
+  padding: 12px 24px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.02);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.log {
+  margin-top: 20px;
+  background: var(--log-bg);
+  padding: 15px;
+  border-radius: 8px;
+  min-height: 80px;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-line;
+  animation: fadeIn 0.4s ease-in-out;
+  color: var(--text-color);
+}
+
+footer p {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.toggle-theme {
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  border: none;
+  background: none;
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
