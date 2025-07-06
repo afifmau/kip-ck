@@ -1,16 +1,16 @@
-# 🔄 Cross-chain Data Flow
+# Cross-chain Data Flow
 
 This document describes the core data flow of KIP-CK, outlining how a signed message is relayed and executed across different chains — without relying on bridges or wrapped tokens.
 
 ---
 
-## 🔁 Standard Cross-chain Flow
+## Standard Cross-chain Flow
 
 +--------+         +---------+          +---------------+          +------------------+ |  User  | ----->  | Relayer | ----->   | Source Chain  | ----->   | Destination Chain| +--------+         +---------+          +---------------+          +------------------+ |                  |                       |                          | |   Sign intent    |                       |                          | |----------------->|                       |                          | |                  |  (optional logging)   |                          | |                  |---------------------->|                          | |                  |                       |  Forward signed intent   | |                  |----------------------------------------------->  | |                  |                       |                          | |                  |                       |   Verify & Execute tx    | |                  |                       |<------------------------ |
 
 ---
 
-## 📦 Payload Structure
+## Payload Structure
 
 - `origin_chain_id`  
 - `destination_chain_id`  
@@ -22,7 +22,7 @@ This document describes the core data flow of KIP-CK, outlining how a signed mes
 
 ---
 
-## 🛠️ Execution on Destination Chain
+## Execution on Destination Chain
 
 1. Trusted Forwarder verifies signature and nonce  
 2. If valid:  
@@ -32,6 +32,6 @@ This document describes the core data flow of KIP-CK, outlining how a signed mes
 
 ---
 
-## ✅ Summary
+## Summary
 
 KIP-CK enables gasless, bridge-less cross-chain interactions using verifiable signed intents — compatible with EVM and non-EVM chains.
