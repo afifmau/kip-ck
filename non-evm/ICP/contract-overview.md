@@ -1,87 +1,71 @@
-#  ICP Smart Contract – Contract Overview
+#  Smart Contract Overview – ICP Integration
 
-This document outlines the initial design and simulated prototype of the smart contract component for the KIP-CK Protocol on the Internet Computer (ICP). It demonstrates how cross-chain relayed messages can be handled by a simple canister-based implementation.
-
----
-
-##  Overview
-
-KIP-CK uses canisters on ICP as a destination endpoint for cross-chain intent execution. The relayer sends signed payloads from EVM or other chains, which are then received and processed by the ICP canister.
-
-The prototype below is written in **Motoko** and simulates basic message handling.
+This document outlines the design principles, capabilities, and responsibilities of smart contracts (canisters) used in the KIP-CK cross-chain protocol when integrating with the Internet Computer (ICP).
 
 ---
 
-##  Conceptual Flow
+##  Core Concepts
 
-1. User signs intent on the source chain.
-2. Relayer forwards payload and signature to the canister.
-3. Canister receives the intent and logs it.
-4. (Optional) Canister performs further processing (to be added in final version).
+###  Canister = Smart Contract on ICP  
+ICP uses **canisters**, which are Wasm-based actors capable of storing state, handling logic, and making asynchronous cross-canister or external HTTP requests.
 
----
+KIP-CK leverages these to:
 
-## Motoko Sample Canister
-
-```motoko
-actor KipCKReceiver {
-  type Intent = {
-    from : Text;
-    to : Text;
-    amount : Nat;
-    signature : Text;
-  };
-
-  var received : [Intent] = [];
-
-  public func receiveIntent(intent : Intent) : async Text {
-    received := Array.append(received, [intent]);
-    return "✅ Intent received and stored.";
-  };
-
-  public query func getAllIntents() : async [Intent] {
-    return received;
-  };
-}
-
->  This prototype does not yet verify signatures. Verification and on-chain execution logic will be integrated in future phases.
-
-
-
+- **Receive signed cross-chain intent**
+- **Perform signature verification**
+- **Initiate external call to EVM chains (via HTTP/gateway)**
+- **Log transaction metadata**
 
 ---
 
- Next Steps (Planned)
+##  Cross-Chain Workflow on ICP
 
-Implement signature validation for relayed payloads.
+1. **Intent Signing**  
+   - User signs off-chain message via compatible wallet (e.g., Metamask or Plug).
 
-Add a logic layer to trigger execution of received transactions.
+2. **Canister Intake**  
+   - A dedicated canister receives this signed payload via frontend or relayer.
 
-Simulate interaction with a frontend (React/Vue or Terminal).
+3. **Verification**  
+   - The canister verifies the signature and checks for replay protection.
 
-Secure relayer endpoint via whitelisting and rate-limiting.
+4. **Execution or Forwarding**  
+   - Canister either:
+     - Executes logic natively on ICP, or
+     - Calls external RPC endpoint (e.g., Ethereum) via HTTPS to trigger on-chain action.
 
-
-
----
-
- Notes
-
-This demo is part of the cross-chain simulation initiative for the ICP Hackathon.
-
-Deployment target: Testnet or local dfx environment.
-
-Gas and compute cost tracking will be analyzed during final testing.
-
-
+5. **Logging**  
+   - Logs or NFTs may be minted to provide a public audit trail.
 
 ---
 
- Prototype Status
+##  Contract Responsibilities
 
-✅ Simulated receive function
-❌ Signature validation (coming soon)
-❌ Execution of payloads (coming soon)
-
+| Responsibility          | Description                                         |
+|-------------------------|-----------------------------------------------------|
+| `verify_signature()`    | Confirms off-chain signed intent is valid           |
+| `forward_to_gateway()`  | Sends payload to external chain endpoint            |
+| `emit_log()`            | Stores a log entry or event on-chain                |
+| `authorize_relayer()`   | Manages trusted relayer whitelist                   |
+| `get_state()`           | Returns current config/state for off-chain UI usage |
 
 ---
+
+##  Security Considerations
+
+- **Signature verification**: Ensures only valid requests are processed
+- **Nonce/replay protection**: Prevents duplicated execution
+- **Relayer authorization**: Only trusted relayers can forward intents
+- **Gas simulation fallback**: Pre-check success conditions before execution
+
+---
+
+##  Notes
+
+- Canisters are upgradeable (with caution)
+- ICP’s reverse-gas model allows low-cost execution
+- For full EVM bridge execution, HTTPS calls may be proxied via Lighthouse or Gateway
+
+---
+
+✅ This overview defines how KIP-CK interacts with ICP smart contracts in a secure, scalable, and verifiable way.
