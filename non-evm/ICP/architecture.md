@@ -1,84 +1,82 @@
- ICP Integration Architecture – KIP-CK Protocol
+#  ICP Integration Architecture – KIP-CK
 
-This document outlines the architecture design for integrating KIP-CK Protocol with the Internet Computer (ICP), focusing on cross-chain messaging, canister interactions, and relayer mechanisms.
+This document explains the architectural components and data flow of KIP-CK integration on the Internet Computer (ICP).
+
+---
+
+##  Core Components
+
+1. **Canister Smart Contracts**  
+   Host the logic for receiving cross-chain payloads, verifying signatures, and executing on-chain actions.
+
+2. **Relayer**  
+   Acts as the off-chain executor that:
+   - Collects signed intents from users
+   - Forwards them to the appropriate canister on ICP
+
+3. **Off-Chain Signer (User)**  
+   The user signs an off-chain message (cross-chain intent) before broadcasting to the relayer.
+
+4. **Bridge-Free Communication Layer**  
+   Instead of using bridges, KIP-CK uses message-passing relayers between EVM and ICP using standardized formats.
+
+---
+
+##  Data Flow Diagram (Text-based)
+
+```text
++------------+        +--------------+        +-----------------+        +---------------------+
+|  User      |        |  Relayer     |        |  ICP Canister   |        |   ICP Ledger (dApps)|
+| (wallet)   |        |              |        |                 |        |                     |
++------------+        +--------------+        +-----------------+        +---------------------+
+      |                      |                         |                             |
+      | 1. Sign intent       |                         |                             |
+      |--------------------->|                         |                             |
+      |                      | 2. Forward payload      |                             |
+      |                      |------------------------>|                             |
+      |                      |                         | 3. Verify signature         |
+      |                      |                         | 4. Execute logic            |
+      |                      |                         |---------------------------->|
 
 
 ---
 
- Key Components
+ Key Technical Details
 
-1. Source Chain (EVM or Non-EVM)
+Signature Verification: Done within the canister using supported crypto libs (e.g., ECDSA secp256k1).
 
-Origin of transaction intent
+No Bridges Required: Relayer operates trust-minimized using off-chain message flow.
 
-Signs payload to be relayed to ICP
-
-
-2. KIP-CK Relayer
-
-Off-chain component responsible for forwarding signed payloads
-
-Verifies signature off-chain or inside a verification canister
-
-Sends intent to the target ICP canister
-
-
-3. ICP Canister (Destination Logic)
-
-Receives the payload
-
-Verifies signature using built-in or imported verification module
-
-Executes logic (e.g., mint token, update state)
-
-
-
----
-
-🔀 Cross-Chain Flow (EVM → ICP)
-
-sequenceDiagram
-  participant User
-  participant EVMChain
-  participant Relayer
-  participant ICP-Canister
-
-  User->>EVMChain: Sign payload off-chain
-  EVMChain->>Relayer: Send payload to relayer
-  Relayer->>ICP-Canister: Submit intent + signature
-  ICP-Canister->>ICP-Canister: Verify & execute tx
-
-
----
-
- Optional Modules
-
-Lighthouse Oracle (future): Used to fetch Ethereum state to ICP
-
-Threshold Signers / Validators: To increase trust minimization in relayer
-
-Canister Logs / Analytics: For traceability and audit trails
+Deterministic Execution: Once verified, the canister triggers ledger update or app logic (e.g., minting, state change).
 
 
 
 ---
 
- Trust Assumptions
+ Security Considerations
 
-Signature verification is reliable inside canister
+Intent validation includes timestamp, origin chain, and signature.
 
-Relayer is honest-but-verifiable (or replicated by multiple nodes)
+Canister whitelists allowed relayers to prevent spoofing.
 
-EVM source chain provides cryptographic guarantees of payload origin
+Optional meta-tx replay protection with unique nonce.
 
 
 
 ---
 
- Notes
+Future Extensions
 
-ICP has no native EVM compatibility; relayer plays a key role
+Native Lighthouse oracle integration (real-world triggers)
 
-The model can be extended to support multi-hop relaying, token bridging, or wrapped assets
+Support for more signing schemes (Ed25519, BLS)
 
-For demo purposes, payloads can be simplified (e.g., simple intent message + timestamp)
+Integration with SNS DAO logic for decentralized execution policies
+
+
+
+---
+
+✅ This modular architecture enables future upgrades, multichain expansion, and composable on-chain services on ICP without relying on traditional bridges.
+
+--- 
