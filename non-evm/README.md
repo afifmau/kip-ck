@@ -1,47 +1,52 @@
-# Non-EVM Integration Overview
+#  Non-EVM Integrations – KIP-CK Protocol
 
-KIP-CK is designed to be modular and extendable beyond the EVM ecosystem.
-
-This section documents how KIP-CK can be conceptually and technically adapted to support non-EVM chains — such as those using Move, WASM, or other custom VMs.
+This section documents how the KIP-CK Protocol integrates with non-EVM blockchains.
 
 ---
 
-## Design Philosophy
+## 🔗 Supported Non-EVM Chains
 
-While EVM chains follow Solidity-based standards, many modern blockchains operate under different execution environments. KIP-CK focuses on:
+### 1. Internet Computer (ICP)
+- Supports secure and verifiable cross-chain communication via canisters.
+- Uses custom relayer-compatible modules built on Motoko and Rust.
+- Leverages ICP-native protocols (e.g., Lighthouse) for external data.
 
-- ✅ Off-chain user intent signing
-- ✅ Relayer-based transaction delivery
-- ✅ Context reconstruction inside smart contract
-- ✅ Stateless message passing between chains
-
-These ideas can be adapted with chain-specific modules or wrappers.
-
----
-
-##  Integration Modules
-
-| Chain   | Status    | File           | Notes                         |
-|---------|-----------|----------------|-------------------------------|
-| Sui     | Draft     | [sui.md](./sui.md)         | MoveVM + custom module |
-| Aptos   | Draft     | [aptos.md](./aptos.md)     | Account module wrapper |
-| Solana  | Concept   | [solana.md](./solana.md)   | PDA + signer relay logic |
-| Near    | Concept   | [near.md](./near.md)       | WASM-based adapter |
+➡️ See [`ICP/`](./ICP) for:
+- Contract Overview
+- Integration Architecture
+- SDK Usage (WIP)
+- Future Plan
+- Limitations & Testing Guide
 
 ---
 
-## 🛣️ Roadmap
+### 2. ⚡ Aptos
+- Supports cross-chain transaction relay via Aptos SDK.
+- Uses intent signing and verification via Aptos `entry_function_payload`.
 
-- [x] Initial research & abstraction
-- [ ] Draft code samples for Move-based chains
-- [ ] Meta-transaction prototype (Solana/Aptos)
-- [ ] Contributor call for multi-chain wrappers
-
----
-
-> 💡 Want to contribute to a non-EVM adapter?  
-> Reach out via issues or open a PR in this folder.
+➡️ See [`aptos/`](./aptos) for:
+- SDK Usage & Sample Code
+- Integration Architecture
+- Contract Behavior & Limitations
 
 ---
 
-_This folder is an open standard proposal and will evolve with feedback and collaboration from different ecosystem builders._
+## Notes
+
+- All non-EVM integrations are experimental and focused on testnet environments.
+- Simulations and prototypes are provided to validate the architecture and relayer behavior.
+- KIP-CK aims to unify the EVM and non-EVM world without requiring centralized bridges.
+
+---
+
+##  Directory Structure
+
+
+non-evm/ ├── ICP/ │   ├── architecture.md │   ├── contract-overview.md │   ├── future-plan.md │   ├── limitations.md │   ├── sdk-usage.md │   ├── testing-guide.md │   └── README.md ├── aptos/ │   ├── architecture.md │   ├── contract-overview.md │   ├── future-plan.md │   ├── limitations.md │   ├── overview.md │   ├── sdk-usage.md │   └── testing-guide.md └── README.md
+
+---
+
+##  Coming Soon
+
+- Integration with Sui, NEAR, and Cosmos SDK-based chains
+- Unified relayer model for both EVM and non-EVM systems
