@@ -1,144 +1,65 @@
- Smart Contract Overview – ICP Canister (KIP-CK)
+#  ICP Smart Contract – Contract Overview
 
-This document provides an overview of the smart contract (canister) logic used in the Internet Computer (ICP) integration for the KIP-CK Protocol.
-
-
----
-
- Canister Roles
-
-1. Intent Receiver
-
-Accepts signed cross-chain payloads (submitted by relayer)
-
-Verifies signatures off-chain or with built-in crypto modules
-
-
-
-2. Transaction Executor
-
-Based on verified intent, executes a corresponding action (e.g., minting tokens, triggering business logic)
-
-
-
-3. State Storage
-
-Tracks verified intents, status, timestamps, origin chain, etc.
-
-Prevents double execution or replay attacks
-
-
-
-4. Logging & Auditing
-
-Optionally stores logs for intent history and traceability
-
-
-
-
+This document outlines the initial design and simulated prototype of the smart contract component for the KIP-CK Protocol on the Internet Computer (ICP). It demonstrates how cross-chain relayed messages can be handled by a simple canister-based implementation.
 
 ---
 
- Key Functions
+##  Overview
 
-Function	Description
+KIP-CK uses canisters on ICP as a destination endpoint for cross-chain intent execution. The relayer sends signed payloads from EVM or other chains, which are then received and processed by the ICP canister.
 
-receive_intent(payload: IntentPayload)	Entry point for relayers to submit cross-chain intent
-verify_signature(payload: IntentPayload)	Checks if the payload is valid (ECDSA/Ed25519)
-execute_action(data: IntentPayload)	Executes logic based on the intent type
-get_tx_status(tx_id: string)	Returns the status of a specific transaction
-admin_set_fee(amount: Nat)	Admin-only function to set protocol fees
-
-
+The prototype below is written in **Motoko** and simulates basic message handling.
 
 ---
 
- IntentPayload Structure
+##  Conceptual Flow
 
-type IntentPayload = {
-  origin_chain: Text;
-  sender: Text;
-  signature: Blob;
-  action: Text;
-  metadata: Text;
-  timestamp: Nat64;
-};
-
+1. User signs intent on the source chain.
+2. Relayer forwards payload and signature to the canister.
+3. Canister receives the intent and logs it.
+4. (Optional) Canister performs further processing (to be added in final version).
 
 ---
 
- Security Measures
-
-Replays are prevented using a hashed intent ID registry
-
-Signature checks ensure only valid cross-chain actions are processed
-
-Optional fee enforcement can be enabled via admin toggle
-
-
-
----
-
- Future Considerations
-
-Modularization of actions (plug-in execution modules)
-
-Integration with ICP Lighthouse for external verification
-
-Token standard extension (ICRC-1 or custom)
-
-
-
----
-
- Summary
-
-This canister acts as the execution endpoint for KIP-CK’s cross-chain protocol on ICP. It is responsible for validating, executing, and recording cross-chain interactions securely.
-
-
----
-
-# ICP Canister Contract – KIP-CK Integration
-
-This section outlines the smart contract (canister) logic used in KIP-CK for handling cross-chain transactions on the Internet Computer.
-
----
-
-##  Contract Responsibilities
-
-- Receive signed intent from relayer
-- Validate payload format and basic structure
-- Emit event or log entry for downstream processing
-- Optional: Simulate cross-chain call execution
-
----
-
-## Key Methods
-
-### `submit_intent(intent: Text)`
-Receives a signed intent payload as a string.  
-Logs the incoming payload and returns confirmation.
+## Motoko Sample Canister
 
 ```motoko
-public shared(msg) func submit_intent(intent: Text) : async Text {
-  Debug.print("Received cross-chain intent: " # intent);
-  return "✅ Intent received successfully";
-};
+actor KipCKReceiver {
+  type Intent = {
+    from : Text;
+    to : Text;
+    amount : Nat;
+    signature : Text;
+  };
 
-get_intent_log()
+  var received : [Intent] = [];
 
-Returns a log of all received intents (for debugging or UI demo display).
+  public func receiveIntent(intent : Intent) : async Text {
+    received := Array.append(received, [intent]);
+    return "✅ Intent received and stored.";
+  };
+
+  public query func getAllIntents() : async [Intent] {
+    return received;
+  };
+}
+
+>  This prototype does not yet verify signatures. Verification and on-chain execution logic will be integrated in future phases.
+
+
 
 
 ---
 
- Security Considerations
+ Next Steps (Planned)
 
-Currently accepts any payload — for simulation purposes only.
+Implement signature validation for relayed payloads.
 
-Signature validation logic will be added in production phase.
+Add a logic layer to trigger execution of received transactions.
 
-Permissions will be enforced through canister access control and verification layers.
+Simulate interaction with a frontend (React/Vue or Terminal).
+
+Secure relayer endpoint via whitelisting and rate-limiting.
 
 
 
@@ -146,24 +67,21 @@ Permissions will be enforced through canister access control and verification la
 
  Notes
 
-This is a minimal canister for demo/testing purposes.
+This demo is part of the cross-chain simulation initiative for the ICP Hackathon.
 
-Real-world integration will require additional modules for signature checks and relayer verification.
+Deployment target: Testnet or local dfx environment.
 
-ICP’s native features like stable memory and on-chain cycles metering will be used in production-grade deployments.
+Gas and compute cost tracking will be analyzed during final testing.
+
 
 
 ---
 
+ Prototype Status
+
+✅ Simulated receive function
+❌ Signature validation (coming soon)
+❌ Execution of payloads (coming soon)
+
+
 ---
-
-##  Additional Prototype Notes
-
-Below is a minimal canister logic used in the KIP-CK simulation phase.  
-It does not perform real signature checks, but is designed to show the end-to-end submission and logging of cross-chain intents.
-
-```motoko
-public shared(msg) func submit_intent(intent: Text) : async Text {
-  Debug.print("Received cross-chain intent: " # intent);
-  return "✅ Intent received successfully";
-};
