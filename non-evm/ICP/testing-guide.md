@@ -124,3 +124,27 @@ Display execution result
 [ ] Canister returns correct simulation result
 
 
+---
+
+##  Success Criteria
+
+- Relayer successfully forwards the signed intent to the ICP canister.
+- The canister correctly parses the payload and logs the cross-chain execution request.
+- Transaction simulated with valid response from the canister.
+- No critical errors or unexpected behavior observed.
+
+---
+
+##  Optional Enhancements
+
+- Implement message queue retries in case of canister lag or relayer timeout.
+- Add mock signature verification logic inside the canister for deeper realism.
+- Display full trace of simulated execution in the web or CLI interface.
+
+---
+
+##  Important Note
+
+This test is designed to validate simulation logic and early-stage integration readiness.  
+While no real asset movement occurs, the structure mimics future mainnet flow.  
+Upon grant approval, full audit and canister hardening will be conducted before any public deployment.
